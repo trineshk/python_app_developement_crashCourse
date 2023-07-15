@@ -6,9 +6,12 @@ import sqlite3 as lite
 class DatabaseManage(object):
 
     def __init__(self):
+        # Initiate a global variable
         global con
+        # connecting to database
         try:
             con = lite.connect('courses.db')
+        # Create table in database with required columns
             with con:
                 cur = con.cursor()
                 cur.execute("CREATE TABLE IF NOT EXISTS course(Id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, price TEXT, is_private BOOLEAN NOT NULL DEFAULT(1))")
@@ -19,6 +22,7 @@ class DatabaseManage(object):
 
     def insert_data(self, data):
         try:
+            # Insert data into the table
             with con:
                 cur = con.cursor()
                 cur.execute(
@@ -32,6 +36,7 @@ class DatabaseManage(object):
 
     def fetch_data(self):
         try:
+            # Fetch all the courses 
             with con:
                 cur = con.cursor()
                 cur.execute("SELECT * FROM course")
@@ -43,6 +48,7 @@ class DatabaseManage(object):
 
     def delete_data(self, id):
         try:
+            # Delete a course referring to a unique Id (course Id)
             with con:
                 cur = con.cursor()
                 sql = " DELETE FROM course WHERE id = ?"
